@@ -19,9 +19,9 @@ import android.widget.TextView;
 public class Counter extends AppCompatActivity {
 
     int count;
-    TextView prudeTextView;
+    TextView countValueDisplay;
 
-    Button prudeButton;
+    Button incrementButton;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
 
@@ -44,8 +44,8 @@ public class Counter extends AppCompatActivity {
     }
 
     public void defineValues() {
-        prudeTextView = (TextView) findViewById(R.id.count_value_display);
-        prudeButton = (Button) findViewById(R.id.increment_button);
+        countValueDisplay = (TextView) findViewById(R.id.count_value_display);
+        incrementButton = (Button) findViewById(R.id.increment_button);
         sharedPreferences = getSharedPreferences("count", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
         builder = new AlertDialog.Builder(this);
@@ -59,23 +59,23 @@ public class Counter extends AppCompatActivity {
     private void setCount() {
         count = sharedPreferences.getInt("count", 0);
         if (count == 0) {
-            prudeTextView.setText("counter");
+            countValueDisplay.setText("counter");
         } else {
-            prudeTextView.setText(Integer.toString(count));
+            countValueDisplay.setText(Integer.toString(count));
         }
     }
 
     public void buttonHandler() {
-        prudeButton.setOnClickListener(new View.OnClickListener() {
+        incrementButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (count != 0) {
                     count = sharedPreferences.getInt("count", 0);
                     count += 1;
-                    prudeTextView.setText(Integer.toString(count));
+                    countValueDisplay.setText(Integer.toString(count));
                 } else {
                     count += 1;
-                    prudeTextView.setText(Integer.toString(count));
+                    countValueDisplay.setText(Integer.toString(count));
                 }
                 commitToSharedPreferences();
             }
@@ -118,7 +118,7 @@ public class Counter extends AppCompatActivity {
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 count = Integer.parseInt(changeAmountInput.getText().toString());
-                prudeTextView.setText(Integer.toString(count));
+                countValueDisplay.setText(Integer.toString(count));
                 commitToSharedPreferences();
             }
         });
