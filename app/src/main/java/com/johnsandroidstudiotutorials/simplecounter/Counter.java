@@ -1,10 +1,10 @@
 package com.johnsandroidstudiotutorials.simplecounter;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.view.Gravity;
@@ -20,10 +20,8 @@ public class Counter extends AppCompatActivity {
 
     int count;
     TextView countValueDisplay;
-
     Button incrementButton;
     SharedPreferences sharedPreferences;
-    SharedPreferences.Editor editor;
 
     AlertDialog.Builder builder;
     EditText inputNewValue;
@@ -47,7 +45,6 @@ public class Counter extends AppCompatActivity {
         countValueDisplay = (TextView) findViewById(R.id.count_value_display);
         incrementButton = (Button) findViewById(R.id.increment_button);
         sharedPreferences = getSharedPreferences("count", Context.MODE_PRIVATE);
-        editor = sharedPreferences.edit();
         builder = new AlertDialog.Builder(this);
         inputNewValue = new EditText(this);
     }
@@ -59,16 +56,19 @@ public class Counter extends AppCompatActivity {
     private void setCount() {
         count = sharedPreferences.getInt("count", 0);
         if (count == 0) {
-            countValueDisplay.setText("counter");
+            countValueDisplay.setText("Count");
+
         } else {
             countValueDisplay.setText(Integer.toString(count));
+
         }
+
     }
 
     public void buttonHandler() {
         incrementButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 if (count != 0) {
                     count = sharedPreferences.getInt("count", 0);
                     count += 1;
@@ -83,8 +83,7 @@ public class Counter extends AppCompatActivity {
     }
 
     public void commitToSharedPreferences() {
-        editor.putInt("count", count);
-        editor.commit();
+        sharedPreferences.edit().putInt("count", count).apply();
     }
 
     public void createAlertDialog() {
@@ -99,15 +98,14 @@ public class Counter extends AppCompatActivity {
         AlertDialogLayout.setPadding(2, 2, 2, 2);
 
         changeAmountInput = new EditText(this);
-        changeAmountInput.setHint("example: 200");
-        changeAmountInput.setInputType(InputType.TYPE_CLASS_NUMBER);
+        changeAmountInput.setHint("example: 232");
+        changeAmountInput.setInputType(InputType.TYPE_CLASS_DATETIME);
 
         AlertDialogLayout.addView(changeAmountInput, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 
         builder.setView(AlertDialogLayout);
         builder.setCancelable(true);
 
-        // Setting Negative "Cancel" Button
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 dialog.cancel();
@@ -122,6 +120,7 @@ public class Counter extends AppCompatActivity {
                 commitToSharedPreferences();
             }
         });
+
         builder.setIcon(R.drawable.ic_info_black_24dp);
         builder.setTitle("Input the correct value");
 
@@ -138,7 +137,6 @@ public class Counter extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_counter_input, menu);
         return true;
     }
@@ -151,4 +149,5 @@ public class Counter extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
 }
