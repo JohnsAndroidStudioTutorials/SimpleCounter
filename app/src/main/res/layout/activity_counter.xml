@@ -10,7 +10,9 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.johnsandroidstudiotutorials.simplecounter.Counter">
 
+
     <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="75">
@@ -31,6 +33,7 @@
         android:layout_weight="25"
         android:orientation="vertical">
 
+
         <Button
             android:id="@+id/increment_button"
             android:layout_width="match_parent"
@@ -38,5 +41,4 @@
             android:text="Count"
             android:textSize="75sp" />
     </LinearLayout>
-
 </LinearLayout>
